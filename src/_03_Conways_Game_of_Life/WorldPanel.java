@@ -121,16 +121,14 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
 		int living = 0;
-		int xNum  = x/cellSize;
-		int yNum = y/cellSize;
+		int cellX = x/cellSize;
+		int cellY = y/cellSize;
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
-				if((i == -1 && xNum != 0) || (i == 1 && xNum != cells.length)) {
-					if((j == -1 && yNum != 0) || (j == 1 && yNum != cells.length)) {
-						if(cells[xNum+i][yNum+j].isAlive == true) {
-							living++;
-						}
-					}
+				if(i == 0 && j == 0) {
+				}else if(cellX+i < 0 || cellX+i > cells.length-1 || cellY+j < 0 || cellY+j > cells.length-1) {
+				}else if(cells[cellX+i][cellY+j].isAlive == true) {
+					living++;
 				}
 			}
 		}
