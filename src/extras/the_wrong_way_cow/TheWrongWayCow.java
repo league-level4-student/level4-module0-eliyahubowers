@@ -41,12 +41,64 @@
 
 package extras.the_wrong_way_cow;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import _04_Maze_Maker.Cell;
+
 public class TheWrongWayCow {
 
     public static int[] findWrongWayCow(final char[][] field) {
         // Fill in the code to return the x,y coordinate position of the
         // head (letter 'c') of the wrong way cow!
-        
-        return null;
+    	int[] positionOfTheBackwardsCow = new int[2];
+    	int[] directionsTally = new int[4];
+    	String[] directions = {"N","E","S","W"};
+    	HashMap<String,String> cowsDirection = new HashMap<String,String>();
+    	//find c{
+        for(int i = 0; i < field.length; i++) {
+        	for(int j = 0; j < field.length; j++) {
+        		if(field[i][j] == 'c') {
+        			//}find c
+        			//find o{
+        			for(int l = -1; l <= 1; l++) {
+        				 for(int k = -1; k <= 1; k++) {
+        					 if((i == j)||(i+j == 0)) {  						 
+        					 }else if(field[i+l][j+k] == 'o') {
+        						 //}find o
+        						 //right o?{
+        						 if(field[i+(2*l)][j+(2*k)] == 'w') {
+        							 //}right o?
+        							 if(l == 1) {
+        								 directionsTally[1] ++;
+        								 cowsDirection.put("E", i+""+j);
+        							 }else if(l == -1) {
+        								 directionsTally[3] ++;
+        								 cowsDirection.put("W", i+""+j);
+        							 }else if(k == 1) {
+        								 directionsTally[2] ++;
+        								 cowsDirection.put("S", i+""+j);
+        							 }else if(k == -1) {
+        								 directionsTally[0] ++;
+        								 cowsDirection.put("N", i+""+j);
+        							 }
+        							 l = 2;
+        							 k = 2;
+        						 }
+        				     }
+        				 }
+        			 } 
+        		}
+        	}
+        }
+        for(int i = 0; i < directionsTally.length; i++) {
+        	if(directionsTally[i] == 1) {
+        		positionOfTheBackwardsCow[0] = Integer.parseInt(cowsDirection.get(directions[i]).substring(0, 1));
+        		positionOfTheBackwardsCow[1] = Integer.parseInt(cowsDirection.get(directions[i]).substring(1));
+        		i = directionsTally.length;
+        	}
+        }
+        System.out.println(positionOfTheBackwardsCow);
+        return positionOfTheBackwardsCow;
     }
 }

@@ -33,14 +33,13 @@ public class MazeMaker{
 
 	//6. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
-		System.out.println("1");
 		//A. mark cell as visited
-		currentCell.hasBeenVisited();
+		currentCell.setBeenVisited(true);
 		//B. check for unvisited neighbors using the cell
 		//currentCell.x
 		ArrayList<Cell> unVisited = getUnvisitedNeighbors(currentCell);
 		//C. if has unvisited neighbors,
-		if(unVisited.isEmpty() == false) {
+		if(!unVisited.isEmpty()) {
 			//C1. select one at random.
 			Cell chosen = unVisited.get(randGen.nextInt(unVisited.size()));
 			//C2. push it to the stack
@@ -49,13 +48,14 @@ public class MazeMaker{
 			removeWalls(currentCell,chosen);
 			//C4. make the new cell the current cell and mark it as visited
 			currentCell = chosen;
+			currentCell.setBeenVisited(true);
 			//C5. call the selectNextPath method with the current cell
 			selectNextPath(currentCell);
 		}
 		//D. if all neighbors are visited
 		else {
 			//D1. if the stack is not empty
-			if(uncheckedCells.isEmpty() == false) {
+			if(!uncheckedCells.isEmpty()) {
 				// D1a. pop a cell from the stack
 				currentCell = uncheckedCells.pop();
 				// D1b. make that the current cell
@@ -73,7 +73,7 @@ public class MazeMaker{
 	private static void removeWalls(Cell c1, Cell c2) {
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
-				if((i == -1 && j == -1)||(i == -1 && j == 1)||(i == 1 && j == -1)||(i == 1 && j == 1)||(i == 0 && j == 0)) {
+				if((i == j)||(i+j == 0)) {
 				}else if(c1.getX()+i == c2.getX() && c1.getY()+j == c2.getY()) {
 					if(i == -1) {
 						c1.setWestWall(false);
@@ -103,7 +103,8 @@ public class MazeMaker{
 		 for(int i = -1; i <= 1; i++) {
 			 for(int j = -1; j <= 1; j++) {
 				 if(c.getX()+i >= maze.getWidth() || c.getX()+i < 0 || c.getY()+j >= maze.getHeight() || c.getY()+j < 0) {
-				 }else if(maze.getCell(c.getX()+i, c.getY()+j).hasBeenVisited() == true) {
+				 }else if((i == j)||(i+j == 0)) { 
+				 }else if(maze.getCell(c.getX()+i, c.getY()+j).hasBeenVisited() == false) {
 					alc.add(maze.getCell(c.getX()+i, c.getY()+j));
 			     }
 			 }
