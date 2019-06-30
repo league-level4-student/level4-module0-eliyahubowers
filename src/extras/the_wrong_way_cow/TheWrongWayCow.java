@@ -63,7 +63,7 @@ public class TheWrongWayCow {
         			//find o{
         			for(int l = -1; l <= 1; l++) {
         				 for(int k = -1; k <= 1; k++) {
-        					 if((i == j)||(i+j == 0)) {  						 
+        					 if((i == j)||(i+j == 0)) {//if not adjacent  						 
         					 }else if(field[i+l][j+k] == 'o') {
         						 //}find o
         						 //right o?{
@@ -98,7 +98,6 @@ public class TheWrongWayCow {
         		i = directionsTally.length;
         	}
         }
-        System.out.println(positionOfTheBackwardsCow);
         return positionOfTheBackwardsCow;
     }
 }
